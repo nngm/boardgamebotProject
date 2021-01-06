@@ -8,8 +8,6 @@ basic_command_prefix = '/'
 def get_command_prefix(bot, message):
     return basic_command_prefix
 
-bot = commands.Bot(command_prefix=get_command_prefix)
-
 # def console_input():
 #     while True:
 #         s = input()
@@ -17,6 +15,8 @@ bot = commands.Bot(command_prefix=get_command_prefix)
 #             print(__token__.get_token())
 #         if s.lower() == 'stop':
 #             return
+
+bot = commands.Bot(command_prefix=get_command_prefix)
 
 @bot.event
 async def on_ready():
