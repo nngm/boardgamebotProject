@@ -6,11 +6,12 @@ from discord.ext import commands
 
 basic_command_prefix = '/'
 
-def get_command_prefix(bot, msg):
+def get_command_prefix(bot, message):
+    server_id = message.guild.id
     with open('prefixes.json', 'r') as json_file:
-        prefixes = json.loads(json_file)
-        if msg.guild.id in prefixes:
-            return prefixes[msg.guild.id]
+        prefixes = json.loads(json_file.read())
+        if server_id in prefixes:
+            return prefixes[server_id]
     
     return basic_command_prefix
 
@@ -30,7 +31,14 @@ async def on_ready():
     activity = discord.Game('basic prefix is ' + basic_command_prefix)
     await bot.change_presence(activity=activity)
 
-    open('prefixes.json', 'w').close()
+    try:
+        with open('prefixes.json', 'r') as json_file:
+            if json_file.read() == '':
+                raise FileNotFoundError
+    except FileNotFoundError:
+        with open('prefixes.json', 'w') as json_file:
+            json_file.write(json.dumps({}))
+            print('Empty "prefixes.json" file made.')
 
     print('Logged in as')
     print(bot.user.name)
