@@ -7,7 +7,7 @@ from discord.ext import commands
 basic_command_prefix = '/'
 
 def get_command_prefix(bot, message):
-    server_id = message.guild.id
+    server_id = str(message.guild.id)
     with open('prefixes.json', 'r') as json_file:
         prefixes = json.loads(json_file.read())
         if server_id in prefixes:
@@ -48,6 +48,14 @@ async def on_ready():
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
+
+@bot.command()
+async def prefix(ctx):
+    server_id = ctx.guild.id
+    await ctx.send(server_id)
+    # await ctx.send(ctx.message)
+    with open('prefixes.json', 'w') as json_file:
+        json_file.write(json.dumps({server_id: '!'}))
 
 if __name__ == '__main__':
     bot.run(__token__.get_token())
