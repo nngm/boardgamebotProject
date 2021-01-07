@@ -1,11 +1,17 @@
 import __token__
 import asyncio
+import json
 import discord
 from discord.ext import commands
 
 basic_command_prefix = '/'
 
-def get_command_prefix(bot, message):
+def get_command_prefix(bot, msg):
+    with open('prefixes.json', 'r') as json_file:
+        prefixes = json.loads(json_file)
+        if msg.guild.id in prefixes:
+            return prefixes[msg.guild.id]
+    
     return basic_command_prefix
 
 # def console_input():
@@ -22,7 +28,10 @@ bot = commands.Bot(command_prefix=get_command_prefix)
 async def on_ready():
     # custom activity for bots are not available now
     activity = discord.Game('basic prefix is ' + basic_command_prefix)
-    await bot.change_presence(activity=activity)    
+    await bot.change_presence(activity=activity)
+
+    open('prefixes.json', 'w').close()
+
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
