@@ -43,7 +43,7 @@ async def on_ready():
     except FileNotFoundError:
         with open(prefix_file_name, 'w') as json_file:
             json_file.write(json.dumps({}))
-            print('Empty "prefixes.json" file made.')
+        print('Empty "prefixes.json" file made.')
     
     with open(prefix_file_name, 'r') as json_file:
         prefixes = json.loads(json_file.read())
