@@ -62,7 +62,11 @@ async def ping(ctx):    # ping
 @bot.command()
 async def prefix(ctx):  # change prefix
     server_id = str(ctx.guild.id)
-    new_prefix = ctx.message.content.split()[1]
+    try:
+        new_prefix = ctx.message.content.split()[1]
+    except:
+        await ctx.send('Type `' + help_command + ' prefix` for usage.')
+        return
 
     with open(prefix_file_name, 'r') as json_file:
         prefixes = json.loads(json_file.read())
