@@ -12,11 +12,10 @@ bot_name = 'BoardGameBot'
 bot_initial = 'BGB'
 prefix_file_name = 'prefixes.json'
 help_command = basic_command_prefix + 'help'
+prefixes = {}
 
 def get_help_message(message):  # returns str
     server_id = str(message.guild.id)
-    with open(prefix_file_name, 'r') as json_file:
-        prefixes = json.loads(json_file.read())
 
     # if message.content == help_command
     descr = 'Prefix of this server is `' + prefixes[server_id] + '`'
@@ -25,17 +24,18 @@ def get_help_message(message):  # returns str
 
 def get_command_prefix(bot, message):
     server_id = str(message.guild.id)
-    with open(prefix_file_name, 'r') as json_file:
-        prefixes = json.loads(json_file.read())
-        if server_id in prefixes:
-            return prefixes[server_id]
+
+    if server_id in prefixes:
+        return prefixes[server_id]
     
     return basic_command_prefix
 
-bot = commands.Bot(command_prefix=get_command_prefix)   
+bot = commands.Bot(command_prefix=get_command_prefix)
 
 @bot.event
 async def on_ready():
+    global prefixes
+
     # custom activity for bots are not available now
     activity_name = bot_initial + ' | Use ' + help_command + \
                     ' to get current prefix and commands.'
@@ -49,6 +49,9 @@ async def on_ready():
         with open(prefix_file_name, 'w') as json_file:
             json_file.write(json.dumps({}))
             print('Empty "prefixes.json" file made.')
+    
+    with open(prefix_file_name, 'r') as json_file:
+        prefixes = json.loads(json_file.read())
 
     print('Logged in as')
     print(bot.user.name)
@@ -62,14 +65,12 @@ async def ping(ctx):    # ping
 @bot.command()
 async def prefix(ctx):  # change prefix
     server_id = str(ctx.guild.id)
+    
     try:
         new_prefix = ctx.message.content.split()[1]
     except:
         await ctx.send('Type `' + help_command + ' prefix` for usage.')
         return
-
-    with open(prefix_file_name, 'r') as json_file:
-        prefixes = json.loads(json_file.read())
     
     prefixes[server_id] = new_prefix
     
