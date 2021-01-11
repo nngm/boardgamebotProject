@@ -22,10 +22,9 @@ def get_help_message(message):  # returns str
     # descr += all commands explanation
     return descr
 
-bot = commands.Bot(command_prefix=lambda bot, message:
-                                         prefixes[str(message.guild.id)] 
-                                         if str(message.guild.id) in prefixes
-                                         else basic_command_prefix)
+bot = commands.Bot(
+    command_prefix=lambda bot, message: prefixes[str(message.guild.id)] 
+        if str(message.guild.id) in prefixes else basic_command_prefix)
 
 @bot.event
 async def on_ready():
