@@ -1,6 +1,7 @@
 import asyncio
 import time
 import json
+import logging
 
 import discord
 from discord.ext import commands
