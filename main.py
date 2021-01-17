@@ -1,5 +1,5 @@
 import asyncio
-import datetime
+import logger
 import json
 
 import discord
@@ -21,13 +21,6 @@ def get_help_message(message):  # returns str
     descr = 'Prefix of this server is `' + prefixes[server_id] + '`'
     # descr += all commands explanation
     return descr
-
-def log(msg):
-    today = datetime.datetime.today()
-    date = today.strftime('%Y-%m-%d')
-    time = today.strftime('%X')
-    with open('./log/' + date, 'a') as log_file:
-        log_file.write('[' + time + '] ' + msg)
 
 bot = commands.Bot(
     command_prefix=lambda bot, message: prefixes[str(message.guild.id)] 
