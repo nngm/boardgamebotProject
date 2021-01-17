@@ -1,7 +1,6 @@
 import asyncio
-import time
+import datetime
 import json
-import logging
 
 import discord
 from discord.ext import commands
@@ -22,6 +21,13 @@ def get_help_message(message):  # returns str
     descr = 'Prefix of this server is `' + prefixes[server_id] + '`'
     # descr += all commands explanation
     return descr
+
+def log(msg):
+    today = datetime.datetime.today()
+    date = today.strftime('%Y-%m-%d')
+    time = today.strftime('%X')
+    with open('./log/' + date, 'a') as log_file:
+        log_file.write('[' + time + '] ' + msg)
 
 bot = commands.Bot(
     command_prefix=lambda bot, message: prefixes[str(message.guild.id)] 
@@ -75,14 +81,14 @@ async def prefix(ctx):  # change prefix
         # raise Exception('Test')
     except Exception as e:
         await ctx.send('Failed to change prefix.')
-        print(str(e) + ': An exception occurred while changing prefix.')
-        print('local time:', time.strftime('%c', time.localtime(time.time())))
-        print('server id:', server_id)
-        print('server name:', ctx.guild.name)
-        print('author id:', ctx.author.id)
-        print('author name:', ctx.author.name)
-        print('new prefix:', new_prefix)
-        print('full command:', ctx.message.content)
+        # print(str(e) + ': An exception occurred while changing prefix.')
+        # print('local time:', time.strftime('%c', time.localtime(time.time())))
+        # print('server id:', server_id)
+        # print('server name:', ctx.guild.name)
+        # print('author id:', ctx.author.id)
+        # print('author name:', ctx.author.name)
+        # print('new prefix:', new_prefix)
+        # print('full command:', ctx.message.content)
     else:
         await ctx.send('Prefix for this server changed to `' + new_prefix + '`')
 
