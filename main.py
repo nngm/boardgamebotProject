@@ -74,14 +74,10 @@ async def prefix(ctx):  # change prefix
         # raise Exception('Test')
     except Exception as e:
         await ctx.send('Failed to change prefix.')
-        # print(str(e) + ': An exception occurred while changing prefix.')
-        # print('local time:', time.strftime('%c', time.localtime(time.time())))
-        # print('server id:', server_id)
-        # print('server name:', ctx.guild.name)
-        # print('author id:', ctx.author.id)
-        # print('author name:', ctx.author.name)
-        # print('new prefix:', new_prefix)
-        # print('full command:', ctx.message.content)
+        logger.log(str(e) + ': An exception occurred while changing prefix.')
+        logger.log('server: ' + server_id + ' (' + ctx.guild.name + ')')
+        logger.log('author: ' + str(ctx.author.id) + ' (' + ctx.author.name + ')')
+        logger.log('used command: ' + ctx.message.content)
     else:
         await ctx.send('Prefix for this server changed to `' + new_prefix + '`')
 
