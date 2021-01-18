@@ -81,13 +81,15 @@ async def prefix(ctx):  # change prefix
     else:
         await ctx.send('Prefix for this server changed to `' + new_prefix + '`')
 
-# @bot.event
-# async def on_message(message):    # 얘가 있으면 @bot.command()가 작동 안 함
-#     if message.author.bot:
-#         return
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
     
-#     if message.content == '/help' or message.content.startswith('/help '):
-#         await message.channel.send(get_help_message(message))
+    if message.content == '/help' or message.content.startswith('/help '):
+        await message.channel.send(get_help_message(message))
+    
+    await bot.process_commands(message)
 
 if __name__ == '__main__':
     bot.run(__token__.get_token())
