@@ -87,7 +87,7 @@ async def on_message(message):
     if message.author.bot:
         return
     
-    if message.content == '/help' or message.content.startswith('/help '):
+    if message.content == help_command or message.content.startswith(help_command + ' '):
         await message.channel.send(get_help_message(message))
     
     await bot.process_commands(message)
