@@ -25,6 +25,7 @@ def get_help_message(message):  # returns str
 bot = commands.Bot(
     command_prefix=lambda bot, message: prefixes[str(message.guild.id)] 
         if str(message.guild.id) in prefixes else basic_command_prefix)
+bot.remove_command('help')
 
 @bot.event
 async def on_ready():
