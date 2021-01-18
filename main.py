@@ -18,7 +18,7 @@ def get_help_message(message):  # returns str
     server_id = str(message.guild.id)
 
     # if message.content == help_command
-    descr = 'Prefix of this server is `' + prefixes[server_id] + '`'
+    descr = 'Prefix for this server is `' + prefixes[server_id] + '`'
     # descr += all commands explanation
     return descr
 
