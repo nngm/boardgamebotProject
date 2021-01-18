@@ -52,6 +52,12 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
+    
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, discord.ext.commands.CommandNotFound):
+        return
+    raise error
 
 @bot.command()
 async def ping(ctx):    # ping
