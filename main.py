@@ -98,5 +98,17 @@ async def on_message(message):
     
     await bot.process_commands(message)
 
+@bot.command()
+async def 오목(ctx):
+    # cmd = {'뜨자': omok.request}
+    
+    try:
+        argv = ctx.message.content.split()
+
+
+    except:
+        await ctx.send('Type `' + help_command + ' 오목` for usage.')
+        return
+
 if __name__ == '__main__':
     bot.run(__token__.get_token())
