@@ -5,10 +5,10 @@ class Game:
         pending = 0
         playing = 1
         stopped = 2
-
-    def __init__(self, players):
+    
+    def __init__(self):
         self.status = Game.Status.pending
-        self.players = players
+        self.players = []
 
 class Omok(Game):
 
@@ -20,11 +20,20 @@ class Omok(Game):
         RIF = 4
         soosyrv = 5
 
-    def __init__(self, id1, id2):
-        super.__init__([id1, id2])
+    def __init__(self):
+        super.__init__()
         self.move = 0
         self.moves = []
         self.board_size = 15
         self.rule = Omok.Rule.renju
-        self.black = self.players[0]
-        self.white = self.players[1]
+
+    def set_white(self, id):
+        self.players.append(id)
+        self.white = id
+
+    def set_black(self, id):
+        self.players.append(id)
+        self.black = id
+
+    def place(self, id, coord):
+        
