@@ -68,6 +68,10 @@ class Omok(Game):
                 return (self.is33(x, y, color) or self.is44(x, y, color)
                         or self.isoverline(x, y, color))
 
+    def isvictory(self, x, y, color):
+        # 
+        return False
+
     def place(self, id, coord):
         if len(coord) != 2:
             raise TypeError
@@ -77,6 +81,7 @@ class Omok(Game):
         
         x = ord(coord[0].upper()) - ord('A')
         y = int(coord[1]) - 1
+        color = self.color[id]
 
         if x >= self.board_size or y < 0 or y >= self.board_size:
             raise Exception('CoordError')
@@ -84,8 +89,11 @@ class Omok(Game):
         if self.board[x][y] != 0:
             raise Exception('PlacementError')
         
-        if self.isforbidden(x, y, self.color[id]):
+        if self.isforbidden(x, y, color):
             raise Exception('ForbiddenMoveError')
         
-        self.board[x][y] = self.color[id]
+        self.board[x][y] = color
         
+        if self.isvictory(x, y, color):
+            self.winner = (id, color)
+            self.status = Omok.Status.stopped
