@@ -69,7 +69,17 @@ class Omok(Game):
                         or self.isoverline(x, y, color))
 
     def isvictory(self, x, y, color):
-        # 
+        if self.rule == Omok.Rule.standard or self.rule == Omok.Rule.omok:
+            if self.isoverline(x, y, color):
+                return False
+
+        #       →  ↑  ↗  ↘
+        xdirs = [1, 0, 1,  1]
+        ydirs = [0, 1, 1, -1]
+
+        # for xdir, ydir in zip(xdir, ydir):
+            
+
         return False
 
     def place(self, id, coord):
@@ -78,22 +88,22 @@ class Omok(Game):
 
         if not coord[0].isalpha() or not coord[1].isnumeric():
             raise TypeError
-        
+
         x = ord(coord[0].upper()) - ord('A')
         y = int(coord[1]) - 1
         color = self.color[id]
 
         if x >= self.board_size or y < 0 or y >= self.board_size:
             raise Exception('CoordError')
-        
+
         if self.board[x][y] != 0:
             raise Exception('PlacementError')
-        
+
         if self.isforbidden(x, y, color):
             raise Exception('ForbiddenMoveError')
-        
+
         self.board[x][y] = color
-        
+
         if self.isvictory(x, y, color):
             self.winner = (id, color)
             self.status = Omok.Status.stopped
