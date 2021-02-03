@@ -93,7 +93,7 @@ class Omok(Game):
         y = int(coord[1]) - 1
         color = self.color[id]
 
-        if x >= self.board_size or y < 0 or y >= self.board_size:
+        if not x < self.board_size or not 0 < y < self.board_size:
             raise Exception('CoordError')
 
         if self.board[x][y] != 0:
