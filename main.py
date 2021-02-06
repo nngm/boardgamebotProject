@@ -18,7 +18,7 @@ def get_help_message(message):  # returns str
     server_id = str(message.guild.id)
 
     # if message.content == help_command
-    descr = 'Prefix for this server is `' + prefixes[server_id] + '`'
+    descr = f'Prefix for this server is `{prefixes[server_id]}`'
     # descr += all commands explanation
     return descr
 
@@ -32,8 +32,8 @@ async def on_ready():
     global prefixes
 
     # custom activity for bots are not available now
-    activity_name = bot_initial + ' | Use ' + help_command + \
-                    ' to get current prefix and commands.'
+    activity_name = f'{bot_initial} | Use {help_command} ' + \
+                     'to get current prefix and commands.'
     await bot.change_presence(activity=discord.Game(activity_name))
 
     try:
@@ -70,7 +70,7 @@ async def prefix(ctx):  # change prefix
     try:
         new_prefix = ctx.message.content.split()[1]
     except:
-        await ctx.send('Type `' + help_command + ' prefix` for usage.')
+        await ctx.send(f'Type `{help_command} prefix` for usage.')
         return
     
     prefixes[server_id] = new_prefix
@@ -81,12 +81,12 @@ async def prefix(ctx):  # change prefix
         # raise Exception('Test')
     except Exception as e:
         await ctx.send('Failed to change prefix.')
-        logger.log(str(e) + ': An exception occurred while changing prefix.')
-        logger.log('server: ' + server_id + ' (' + ctx.guild.name + ')')
-        logger.log('author: ' + str(ctx.author.id) + ' (' + ctx.author.name + ')')
-        logger.log('used command: ' + ctx.message.content)
+        logger.log(f'{e}: An exception occurred while changing prefix.')
+        logger.log(f'server: {server_id} ({ctx.guild.name})')
+        logger.log(f'author: {ctx.author.id} ({ctx.author.name})')
+        logger.log(f'used command: {ctx.message.content}')
     else:
-        await ctx.send('Prefix for this server changed to `' + new_prefix + '`')
+        await ctx.send(f'Prefix for this server changed to `{new_prefix}`')
 
 @bot.event
 async def on_message(message):
@@ -107,7 +107,7 @@ async def 오목(ctx):
 
 
     except:
-        await ctx.send('Type `' + help_command + ' 오목` for usage.')
+        await ctx.send(f'Type `{help_command} 오목` for usage.')
         return
 
 if __name__ == '__main__':
