@@ -12,6 +12,7 @@ class Game:
 
 class Omok(Game):
 
+    none  = 0
     black = 1
     white = 2
 
@@ -28,7 +29,7 @@ class Omok(Game):
         self.move = 0
         self.moves = []
         self.board_size = 15
-        self.board = [[0] * self.board_size] * self.board_size
+        self.board = [[Omok.none] * self.board_size] * self.board_size
         self.rule = Omok.Rule.renju
         self.color = {}
 
@@ -41,7 +42,21 @@ class Omok(Game):
         self.players.append(id)
         self.white = id
         self.color[id] = Omok.white
-    
+
+    def get_length(self, x, y, color, dir):
+        if self.board[x][y] != color:
+            return 0
+        
+        sum = 1
+
+        for i in range(1, 5):
+            cur = self.board[x + dir[0]][y + dir[1]]
+            if cur == color:
+                sum += 1
+            elif cur != Omok.none:
+                break
+        
+
     def is33(self, x, y, color):
         # 
         return False
