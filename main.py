@@ -14,7 +14,7 @@ prefix_file_name = 'prefixes.json'
 help_command = basic_command_prefix + 'help'
 prefixes = {}
 
-def get_help_message(message):  # returns str
+def get_help_message(message) -> str:
     server_id = str(message.guild.id)
 
     # if message.content == help_command
