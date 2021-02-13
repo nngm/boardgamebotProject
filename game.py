@@ -50,7 +50,7 @@ class Omok(Game):
         sum = 1
 
         for i in range(1, 5):
-            cur = self.board[x + dir[0]][y + dir[1]]
+            cur = self.board[x + i*dir[0]][y + i*dir[1]]
             if cur == color:
                 sum += 1
             elif cur != Omok.none:
